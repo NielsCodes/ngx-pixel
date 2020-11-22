@@ -1,7 +1,9 @@
-import { PixelConfiguration } from './pixel.models';
+import { PixelConfiguration, PixelEventProperties } from './pixel.models';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+
+declare var fbq: any;
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +19,14 @@ export class PixelService {
       // Log page views after router navigation ends
       router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => {
 
-          // if (this.isLoaded()) {
-          //   this.track('PageView');
-          // }
+        if (this.isLoaded()) {
+          this.track('PageView');
+        }
 
-        });
+      });
     }
 
   }
-
 
   /**
    * Initialize the Pixel tracking script
@@ -41,6 +42,57 @@ export class PixelService {
   remove(): void {
     this.removePixelScript();
     this.config.enabled = false;
+  }
+
+  /**
+   * Track a Standard Event as predefined by Facebook
+   * @see {@link https://developers.facebook.com/docs/facebook-pixel/reference}
+   * @param eventName The name of the event that is being tracked
+   * @param properties Optional properties of the event
+   */
+  track(
+    eventName:
+    'AddPaymentInfo' |
+    'AddToCart' |
+    'AddToWishlist' |
+    'CompleteRegistration' |
+    'Contact' |
+    'CustomizeProduct' |
+    'Donate' |
+    'FindLocation' |
+    'InitiateCheckout' |
+    'Lead' |
+    'PageView' |
+    'Purchase' |
+    'Schedule' |
+    'Search' |
+    'StartTrial' |
+    'SubmitApplication' |
+    'Subscribe' |
+    'ViewContent',
+    properties?: PixelEventProperties
+    ): void {
+
+    if (properties) {
+      fbq('track', eventName, properties);
+    } else {
+      fbq('track', eventName);
+    }
+
+  }
+
+  /**
+   * Track a custom Event
+   * @see {@link https://developers.facebook.com/docs/facebook-pixel/implementation/conversion-tracking#custom-conversions}
+   * @param eventName The name of the event that is being tracked
+   * @param properties Optional properties of the event
+   */
+  trackCustom(eventName: string, properties?: object): void {
+    if (properties) {
+      fbq('trackCustom', eventName, properties);
+    } else {
+      fbq('trackCustom', eventName);
+    }
   }
 
   /**
