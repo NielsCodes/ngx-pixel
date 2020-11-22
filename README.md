@@ -14,7 +14,11 @@ Using a Facebook Pixel is fairly simple. You add the script to the `head` sectio
 - Navigation using the Angular Router is not tracked.
 - There are no TypeScript definitions by default, so no Intellisense or linting.
 
-***ngx-pixel*** solves both of these issues.
+***ngx-pixel*** solves both of these issues. It adds a service that can be used in any component to track events and when enabled, it automatically tracks page views for each router navigation. 
+
+By default, ***ngx-pixel*** is **disabled** to make it easier to comply with GDPR and other privacy regulations. The Facebook script is only loaded after ***ngx-pixel*** is enabled, which also helps cut down the initial load time of your application. Read [here](#enabling) how to *enable* and *disable* ***ngx-pixel***.
+
+---
 
 ## Usage
 Using ***ngx-pixel*** is very simple.
@@ -84,13 +88,65 @@ this.pixel.trackCustom('MyCustomEvent', {
 })
 ```
 
+---
+
+## Enabling and disabling ***ngx-pixel*** <a name="enabling"></a>
+***ngx-pixel*** is disabled by default. In many cases, tracking without user consent is not allowed by privacy regulations like the European GDPR. ***ngx-pixel*** also doesn't inject the Facebook scripts until it is iniaitlized (upon consent), which helps cut down the initial loading size and time of your application.
+
+### Enabling ***ngx-pixel*** immediately
+It is still possible to initialize ***ngx-pixel*** as soon as your app module loads.
+When adding ***ngx-pixel*** to `app.module.ts`, add the parameter `enabled: true`.
+```TypeScript
+imports: [
+  BrowserModule,
+  PixelModule.forRoot({ enabled: true, pixelId: 'YOUR_PIXEL_ID'})
+],
+```
+
+### Enabling ***ngx-pixel*** from a component
+You can also enable ***ngx-pixel*** from within any of your components, like so:
+```TypeScript
+export class HomeComponent {
+
+  constructor(
+    private pixel: PixelService
+  ) { }
+
+  onConsent(): void {
+    this.pixel.initialize();
+  }
+
+}
+```
+
+### Disabling ***ngx-pixel***
+Disabling works very similar to *enabling* from within a component and looks like this:
+```TypeScript
+export class HomeComponent {
+
+  constructor(
+    private pixel: PixelService
+  ) { }
+
+  onRevokeConsent(): void {
+    this.pixel.remove();
+  }
+
+}
+```
+
+---
+
 ## Important notes
-- ***ngx-pixel*** was developed using Angular 11, which uses the Ivy compiler instead of the older View Engine compiler. If your project uses Angular 8 or earlier, or if you decided to keep using View Engine with newer Angular versions, ***ngx-pixel*** might not be compatible, although I have not yet tested this to confirm.
+- Backwards compatibility is not guaranteed. ***ngx-pixel*** was developed using Angular 11, which uses the Ivy compiler instead of the older View Engine compiler. If your project uses Angular 8 or earlier, or if you decided to keep using View Engine with newer Angular versions, ***ngx-pixel*** might not be compatible, although I have not yet tested this to confirm.
+
+---
 
 ## What's next?
-- [ ] Checking Pixel ID's using a RegEx. I first want to confirm whether all Pixel ID's follow the same format.
+- [ ] Checking Pixel ID's using a RegEx. First need to confirm whether all Pixel ID's follow the same format.
 - [ ] Adding tests.
 - [ ] Testing View Engine backwards-compatibility.
+- [ ] Removing all Facebook scripts on removal, not just the initial script.
 
 ---
 <center>

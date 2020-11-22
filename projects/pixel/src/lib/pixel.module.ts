@@ -8,9 +8,12 @@ import { PixelService } from './pixel.service';
 })
 export class PixelModule {
 
-  private static config: PixelConfiguration;
+  private static config: PixelConfiguration | null = null;
 
   constructor( private pixel: PixelService ) {
+    if (!PixelModule.config) {
+      throw Error('ngx-pixel not configured correctly');
+    }
     if (PixelModule.config.enabled) {
       this.pixel.initialize();
     }
