@@ -1,6 +1,6 @@
 # ngx-pixel
 
-![](https://storage.googleapis.com/nielskersic/static-images/github/Angular%20%2B%20FB%20Event%20Mgr.png)
+![ngx-pixel header](https://storage.googleapis.com/nielskersic/static-images/github/ngx-pixel%20header-min.png)
 
 <center>
 A simple Angular library to simplify tracking using a Facebook Pixel.
