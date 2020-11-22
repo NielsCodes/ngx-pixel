@@ -32,9 +32,6 @@ export interface PixelEventProperties {
    */
   contents?: object[];
 
-  /** The currency for the `value` specified. */
-  currency?: string;
-
   /**
    * Used with `InitiateCheckout` event.
    * The number of items when checkout was initiated.
@@ -55,4 +52,30 @@ export interface PixelEventProperties {
 
   /** The value of a user performing this event to the business. */
   value?: number;
+
+  /**
+   * The currency for the `value` specified.
+   * @see {@link https://developers.facebook.com/docs/marketing-api/currencies}
+   */
+  currency?:
+  'AED' | 'ARS' | 'AUD' |
+  'BDT' | 'BOB' | 'BRL' |
+  'CAD' | 'CHF' | 'CLP' | 'CNY' | 'COP' | 'CRC' | 'CZK' |
+  'DKK' | 'DZD' |
+  'EGP' | 'EUR' |
+  'GBP' | 'GTQ' |
+  'HKD' | 'HNL' | 'HUF' |
+  'IDR' | 'ILS' | 'INR' | 'ISK' |
+  'JPY' |
+  'KES' | 'KRW' |
+  'MOP' | 'MXN' | 'MYR' |
+  'NGN' | 'NIO' | 'NOK' | 'NZD' |
+  'PEN' | 'PHP' | 'PKR' | 'PLN' | 'PYG' |
+  'QAR' |
+  'RON' | 'RUB' |
+  'SAR' | 'SEK' | 'SGD' |
+  'THB' | 'TRY' | 'TWD' |
+  'USD' | 'UYU' |
+  'VEF' | 'VND' |
+  'ZAR';
 }
