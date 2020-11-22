@@ -1,14 +1,12 @@
-# ngx-pixel
-
 ![ngx-pixel header](https://storage.googleapis.com/nielskersic/static-images/github/ngx-pixel%20header-min.png)
 
-<center>
-A simple Angular library to simplify tracking using a Facebook Pixel.
-</center>
+<p align="center">
+An Angular library to simplify tracking using a Facebook Pixel.
+</p>
 
 ---
 
-## Introduction
+# Introduction
 Using a Facebook Pixel is fairly simple. You add the script to the `head` section of all pages, after which you can use the `fbq` function. However, in Angular it's not as straight-forward. The main two problems are as follows:
 
 - Navigation using the Angular Router is not tracked.
@@ -20,13 +18,13 @@ By default, ***ngx-pixel*** is **disabled** to make it easier to comply with GDP
 
 ---
 
-## Usage
+# Usage
 Using ***ngx-pixel*** is very simple.
 
-### 1. Installing the NPM package
+## 1. Installing the NPM package
 You can install the NPM package with `npm install ngx-pixel`
 
-### 2. Add it to your app module
+## 2. Add it to your app module
 Add the library to your app's module, usually `app.module.ts`. Make sure you use the `forRoot()` method. Within this method, add your [Facebook Pixel ID](https://www.facebook.com/business/help/952192354843755). 
 ```typescript
 import { PixelModule } from 'ngx-pixel';
@@ -46,7 +44,7 @@ export class AppModule { }
 ```
 **NOTE:** By default, the library does not start tracking immediately. In most cases this requires user consent to comply with GDPR and other privacy regulations. If you would still like start tracking as soon as your app module loads, include the `enabled: true` parameter in when you call `forRoot()`.
 
-### 3. Add it to your components
+## 3. Add it to your components
 In any component where you would like to track certain events, you can import the ***ngx-pixel service*** with `import { PixelService } from 'ngx-pixel';`
 Then you can inject the service into your component as follows:
 ```TypeScript
@@ -59,10 +57,10 @@ export class HomeComponent {
 }
 ```
 
-### 4. Tracking events
+## 4. Tracking events
 There are two groups of events that you can track, namely *Standard events*  and *Custom events*. 
 
-#### Standard events
+### Standard events
 **Standard events** are common events that Facebook has created. You can find the full list [here](https://developers.facebook.com/docs/facebook-pixel/reference). You can track a Standard event like this:
 ![Track Standard events using ngx-pixel](https://storage.googleapis.com/nielskersic/static-images/github/ngx-pixel-track-large.gif)
 
@@ -75,7 +73,7 @@ this.pixel.track('InitiateCheckout', {
 });
 ```
 
-#### Custom events
+### Custom events
 Tracking **Custom events** works very similar to tracking Standard events. The only major difference is that there are no TypeScript interfaces and therefore no Intellisense. This is because the event *name* and optional *properties* can be anything. Tracking a custom event with ***ngx-pixel*** looks like this:
 ```TypeScript
 this.pixel.trackCustom('MyCustomEvent');
@@ -90,10 +88,10 @@ this.pixel.trackCustom('MyCustomEvent', {
 
 ---
 
-## Enabling and disabling ***ngx-pixel*** <a name="enabling"></a>
+# Enabling and disabling ***ngx-pixel*** <a name="enabling"></a>
 ***ngx-pixel*** is disabled by default. In many cases, tracking without user consent is not allowed by privacy regulations like the European GDPR. ***ngx-pixel*** also doesn't inject the Facebook scripts until it is iniaitlized (upon consent), which helps cut down the initial loading size and time of your application.
 
-### Enabling ***ngx-pixel*** immediately
+## Enabling ***ngx-pixel*** immediately
 It is still possible to initialize ***ngx-pixel*** as soon as your app module loads.
 When adding ***ngx-pixel*** to `app.module.ts`, add the parameter `enabled: true`.
 ```TypeScript
@@ -103,7 +101,7 @@ imports: [
 ],
 ```
 
-### Enabling ***ngx-pixel*** from a component
+## Enabling ***ngx-pixel*** from a component
 You can also enable ***ngx-pixel*** from within any of your components, like so:
 ```TypeScript
 export class HomeComponent {
@@ -119,7 +117,7 @@ export class HomeComponent {
 }
 ```
 
-### Disabling ***ngx-pixel***
+## Disabling ***ngx-pixel***
 Disabling works very similar to *enabling* from within a component and looks like this:
 ```TypeScript
 export class HomeComponent {
@@ -137,21 +135,21 @@ export class HomeComponent {
 
 ---
 
-## Important notes
-- Backwards compatibility is not guaranteed. ***ngx-pixel*** was developed using Angular 11, which uses the Ivy compiler instead of the older View Engine compiler. If your project uses Angular 8 or earlier, or if you decided to keep using View Engine with newer Angular versions, ***ngx-pixel*** might not be compatible, although I have not yet tested this to confirm.
+# Important notes
+- Backwards compatibility is not guaranteed. ***ngx-pixel*** was developed using Angular 11, which uses the Ivy compiler instead of the older View Engine compiler. If your project uses Angular 8 or earlier, or if you've decided to keep using View Engine with newer Angular versions, ***ngx-pixel*** might not be compatible, although I have not yet tested this to confirm.
 
 ---
 
-## What's next?
+# What's next?
 - [ ] Checking Pixel ID's using a RegEx. First need to confirm whether all Pixel ID's follow the same format.
 - [ ] Adding tests.
 - [ ] Testing View Engine backwards-compatibility.
 - [ ] Removing all Facebook scripts on removal, not just the initial script.
 
 ---
-<center>
-Created with ❤️ by Niels Kersic, [niels.codes](https://niels.codes).
-</center>
+
+Created with ❤️ by Niels Kersic, [niels.codes](https://google.com).
+
 
 
 
