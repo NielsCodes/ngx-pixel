@@ -12,7 +12,7 @@ export class PixelModule {
 
   constructor( private pixel: PixelService ) {
     if (PixelModule.config.enabled) {
-      // TODO: Call initialization function
+      this.pixel.initialize();
     }
   }
 
