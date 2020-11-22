@@ -3,5 +3,48 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "pixel": {
+      "projectType": "library",
+      "root": "projects/pixel",
+      "sourceRoot": "projects/pixel/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/pixel/tsconfig.lib.json",
+            "project": "projects/pixel/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pixel/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/pixel/src/test.ts",
+            "tsConfig": "projects/pixel/tsconfig.spec.json",
+            "karmaConfig": "projects/pixel/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/pixel/tsconfig.lib.json",
+              "projects/pixel/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }},
+  "cli": {
+    "analytics": "236561c0-2dd3-46bd-9c4c-605442e3815b"
+  },
+  "defaultProject": "pixel"
 }
