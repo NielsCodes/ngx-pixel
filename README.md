@@ -148,7 +148,7 @@ export class HomeComponent {
 
 ---
 
-Created with ❤️ by Niels Kersic, [niels.codes](https://google.com).
+Created with ❤️ by Niels Kersic, [niels.codes](https://niels.codes).
 
 
 
