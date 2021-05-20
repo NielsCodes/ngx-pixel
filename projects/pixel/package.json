@@ -13,10 +13,10 @@
     "url": "https://github.com/NielsKersic/ngx-pixel"
   },
   "peerDependencies": {
-    "@angular/common": "^11.0.1",
-    "@angular/core": "^11.0.1"
+    "@angular/common": ">=11.0.1",
+    "@angular/core": ">=11.0.1"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": ">=2.0.0"
   }
 }
