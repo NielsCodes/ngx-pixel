@@ -1,4 +1,4 @@
-import { PixelConfiguration, PixelEventProperties } from './pixel.models';
+import { PixelEventName, PixelConfiguration, PixelEventProperties } from './pixel.models';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -51,25 +51,7 @@ export class PixelService {
    * @param properties Optional properties of the event
    */
   track(
-    eventName:
-    'AddPaymentInfo' |
-    'AddToCart' |
-    'AddToWishlist' |
-    'CompleteRegistration' |
-    'Contact' |
-    'CustomizeProduct' |
-    'Donate' |
-    'FindLocation' |
-    'InitiateCheckout' |
-    'Lead' |
-    'PageView' |
-    'Purchase' |
-    'Schedule' |
-    'Search' |
-    'StartTrial' |
-    'SubmitApplication' |
-    'Subscribe' |
-    'ViewContent',
+    eventName: PixelEventName,
     properties?: PixelEventProperties
     ): void {
 

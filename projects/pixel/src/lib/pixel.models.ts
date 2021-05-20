@@ -79,3 +79,22 @@ export interface PixelEventProperties {
   'VEF' | 'VND' |
   'ZAR';
 }
+
+export type PixelEventName = 'AddPaymentInfo' |
+'AddToCart' |
+'AddToWishlist' |
+'CompleteRegistration' |
+'Contact' |
+'CustomizeProduct' |
+'Donate' |
+'FindLocation' |
+'InitiateCheckout' |
+'Lead' |
+'PageView' |
+'Purchase' |
+'Schedule' |
+'Search' |
+'StartTrial' |
+'SubmitApplication' |
+'Subscribe' |
+'ViewContent';
