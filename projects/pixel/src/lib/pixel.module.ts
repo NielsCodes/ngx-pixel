@@ -41,15 +41,9 @@ export class PixelModule {
    */
   private static verifyPixelId(pixelId: string): void {
 
-    // Regular expression for Pixel ID format (15 digits) (not yet implemented)
-    const regex = /^\d{15}$/;
-
-    // TODO: Check validity of Pixel ID with a RegEx.
     // Have to verify first that all Pixel IDs follow the same 15 digit format
     if (pixelId === null || pixelId === undefined || pixelId.length === 0) {
       throw Error('Invalid Facebook Pixel ID. Did you pass the ID into the forRoot() function?');
-    } else if (!regex.test(pixelId)) {
-      throw Error('Invalid Facebook Pixel ID. The ID should consist of 15 digits.');
     }
 
   }
