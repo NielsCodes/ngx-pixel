@@ -50,7 +50,8 @@ export class PixelService {
 
   /**
    * Track a Standard Event as predefined by Facebook
-   * @see {@link https://developers.facebook.com/docs/facebook-pixel/reference}
+   *
+   * See {@link https://developers.facebook.com/docs/facebook-pixel/reference Facebook Pixel docs - reference}
    * @param eventName The name of the event that is being tracked
    * @param properties Optional properties of the event
    */
@@ -69,7 +70,8 @@ export class PixelService {
 
   /**
    * Track a custom Event
-   * @see {@link https://developers.facebook.com/docs/facebook-pixel/implementation/conversion-tracking#custom-conversions}
+   *
+   * See {@link https://developers.facebook.com/docs/facebook-pixel/implementation/conversion-tracking#custom-conversions Facebook Pixel docs - custom conversions}
    * @param eventName The name of the event that is being tracked
    * @param properties Optional properties of the event
    */

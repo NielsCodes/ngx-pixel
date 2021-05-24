@@ -12,7 +12,7 @@ export class PixelModule {
 
   constructor( private pixel: PixelService ) {
     if (!PixelModule.config) {
-      throw Error('ngx-pixel not configured correctly');
+      throw Error('ngx-pixel not configured correctly. Pass the `pixelId` property to the `forRoot()` function');
     }
     if (PixelModule.config.enabled) {
       this.pixel.initialize();
