@@ -3,8 +3,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { PixelService } from './pixel.service';
 
 @NgModule({
-  imports: [
-  ],
+  imports: [],
 })
 export class PixelModule {
 
@@ -21,6 +20,7 @@ export class PixelModule {
 
   /**
    * Initiale the Facebook Pixel Module
+   *
    * Add your Pixel ID as parameter
    */
   static forRoot(config: PixelConfiguration): ModuleWithProviders<PixelModule> {
@@ -40,12 +40,10 @@ export class PixelModule {
    * @param pixelId Pixel ID to verify
    */
   private static verifyPixelId(pixelId: string): void {
-
     // Have to verify first that all Pixel IDs follow the same 15 digit format
     if (pixelId === null || pixelId === undefined || pixelId.length === 0) {
       throw Error('Invalid Facebook Pixel ID. Did you pass the ID into the forRoot() function?');
     }
-
   }
 
 }

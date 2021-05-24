@@ -59,6 +59,10 @@ export class PixelService {
     eventName: PixelEventName,
     properties?: PixelEventProperties
     ): void {
+    if(!this.isLoaded()) {
+      console.warn('Tried to track an event without initializing a Pixel instance. Call `initialize()` first.');
+      return;
+    }
 
     if (properties) {
       fbq('track', eventName, properties);
@@ -76,6 +80,11 @@ export class PixelService {
    * @param properties Optional properties of the event
    */
   trackCustom(eventName: string, properties?: object): void {
+    if(!this.isLoaded()) {
+      console.warn('Tried to track an event without initializing a Pixel instance. Call `initialize()` first.');
+      return;
+    }
+
     if (properties) {
       fbq('trackCustom', eventName, properties);
     } else {
