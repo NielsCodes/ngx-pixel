@@ -1,4 +1,4 @@
-import { PixelConfiguration, PixelEventProperties } from './pixel.models';
+import { PixelEventName, PixelConfiguration, PixelEventProperties } from './pixel.models';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -33,9 +33,13 @@ export class PixelService {
    * - Adds the script to page's head
    * - Tracks first page view
    */
-  initialize(): void {
+  initialize(pixelId = this.config.pixelId): void {
+    if (this.isLoaded()) {
+      console.warn('Tried to initialize a Pixel instance while another is already active. Please call `remove()` before initializing a new instance.');
+      return;
+    }
     this.config.enabled = true;
-    this.addPixelScript(this.config.pixelId);
+    this.addPixelScript(pixelId);
   }
 
   /** Remove the Pixel tracking script */
@@ -46,32 +50,19 @@ export class PixelService {
 
   /**
    * Track a Standard Event as predefined by Facebook
-   * @see {@link https://developers.facebook.com/docs/facebook-pixel/reference}
+   *
+   * See {@link https://developers.facebook.com/docs/facebook-pixel/reference Facebook Pixel docs - reference}
    * @param eventName The name of the event that is being tracked
    * @param properties Optional properties of the event
    */
   track(
-    eventName:
-    'AddPaymentInfo' |
-    'AddToCart' |
-    'AddToWishlist' |
-    'CompleteRegistration' |
-    'Contact' |
-    'CustomizeProduct' |
-    'Donate' |
-    'FindLocation' |
-    'InitiateCheckout' |
-    'Lead' |
-    'PageView' |
-    'Purchase' |
-    'Schedule' |
-    'Search' |
-    'StartTrial' |
-    'SubmitApplication' |
-    'Subscribe' |
-    'ViewContent',
+    eventName: PixelEventName,
     properties?: PixelEventProperties
     ): void {
+    if(!this.isLoaded()) {
+      console.warn('Tried to track an event without initializing a Pixel instance. Call `initialize()` first.');
+      return;
+    }
 
     if (properties) {
       fbq('track', eventName, properties);
@@ -83,11 +74,17 @@ export class PixelService {
 
   /**
    * Track a custom Event
-   * @see {@link https://developers.facebook.com/docs/facebook-pixel/implementation/conversion-tracking#custom-conversions}
+   *
+   * See {@link https://developers.facebook.com/docs/facebook-pixel/implementation/conversion-tracking#custom-conversions Facebook Pixel docs - custom conversions}
    * @param eventName The name of the event that is being tracked
    * @param properties Optional properties of the event
    */
   trackCustom(eventName: string, properties?: object): void {
+    if(!this.isLoaded()) {
+      console.warn('Tried to track an event without initializing a Pixel instance. Call `initialize()` first.');
+      return;
+    }
+
     if (properties) {
       fbq('trackCustom', eventName, properties);
     } else {

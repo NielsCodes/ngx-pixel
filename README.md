@@ -35,7 +35,7 @@ import { PixelModule } from 'ngx-pixel';
   ],
   imports: [
     BrowserModule,
-    PixelModule.forRoot({ enabled: true, pixelId: 'YOUR_PIXEL_ID'})
+    PixelModule.forRoot({ enabled: true, pixelId: 'YOUR_PIXEL_ID' })
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -117,6 +117,12 @@ export class HomeComponent {
 }
 ```
 
+## Enabling with a dynamic Pixel ID
+In situations where the Pixel ID needs to be changed dynamically, this can be done using `initialize()` with the new Pixel ID as an optional argument. 
+**Notes:** 
+- A Pixel ID still needs to be provided when importing ***ngx-pixel*** in the module.
+- The previous instance should be removed with `remove()` before initializing a new Pixel ID.  
+
 ## Disabling ***ngx-pixel***
 Disabling works very similar to *enabling* from within a component and looks like this:
 ```TypeScript
@@ -141,9 +147,8 @@ export class HomeComponent {
 ---
 
 # What's next?
-- [ ] Checking Pixel ID's using a RegEx. First need to confirm whether all Pixel ID's follow the same format.
+- [ ] Adding Angular Universal SSR support.
 - [ ] Adding tests.
-- [ ] Testing View Engine backwards-compatibility.
 - [ ] Removing all Facebook scripts on removal, not just the initial script.
 
 ---

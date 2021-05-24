@@ -55,7 +55,8 @@ export interface PixelEventProperties {
 
   /**
    * The currency for the `value` specified.
-   * @see {@link https://developers.facebook.com/docs/marketing-api/currencies}
+   *
+   * See {@link https://developers.facebook.com/docs/marketing-api/currencies Facebook Pixel docs - currency codes}
    */
   currency?:
   'AED' | 'ARS' | 'AUD' |
@@ -79,3 +80,22 @@ export interface PixelEventProperties {
   'VEF' | 'VND' |
   'ZAR';
 }
+
+export type PixelEventName = 'AddPaymentInfo' |
+'AddToCart' |
+'AddToWishlist' |
+'CompleteRegistration' |
+'Contact' |
+'CustomizeProduct' |
+'Donate' |
+'FindLocation' |
+'InitiateCheckout' |
+'Lead' |
+'PageView' |
+'Purchase' |
+'Schedule' |
+'Search' |
+'StartTrial' |
+'SubmitApplication' |
+'Subscribe' |
+'ViewContent';
