@@ -1,7 +1,8 @@
 import { PixelEventName, PixelConfiguration, PixelEventProperties } from './pixel.models';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import {isPlatformBrowser} from '@angular/common';
 
 declare var fbq: any;
 
@@ -12,10 +13,12 @@ export class PixelService {
 
   constructor(
     @Inject('config') private config: PixelConfiguration,
+    // tslint:disable-next-line:ban-types
+    @Inject(PLATFORM_ID) public platformId: Object,
     @Optional() private router: Router
   ) {
 
-    if (router) {
+    if (router && isPlatformBrowser(platformId)) {
       // Log page views after router navigation ends
       router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => {
 
@@ -98,7 +101,8 @@ export class PixelService {
    */
   private addPixelScript(pixelId: string): void {
 
-    const pixelCode = `
+    if(isPlatformBrowser(this.platformId)) {
+      const pixelCode = `
     var pixelCode = function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -110,25 +114,32 @@ export class PixelService {
     fbq('init', '${pixelId}');
     fbq('track', 'PageView');`;
 
-    const scriptElement = document.createElement('script');
-    scriptElement.setAttribute('id', 'pixel-script');
-    scriptElement.type = 'text/javascript';
-    scriptElement.innerHTML = pixelCode;
-    document.getElementsByTagName('head')[0].appendChild(scriptElement);
+      const scriptElement = document.createElement('script');
+      scriptElement.setAttribute('id', 'pixel-script');
+      scriptElement.type = 'text/javascript';
+      scriptElement.innerHTML = pixelCode;
+      document.getElementsByTagName('head')[0].appendChild(scriptElement);
+    }
   }
 
   /** Remove Facebook Pixel tracking script from the application */
   private removePixelScript(): void {
-    const pixelElement = document.getElementById('pixel-script');
-    if (pixelElement) {
-      pixelElement.remove();
+    if(isPlatformBrowser(this.platformId)) {
+      const pixelElement = document.getElementById('pixel-script');
+      if (pixelElement) {
+        pixelElement.remove();
+      }
     }
   }
 
   /** Checks if the script element is present */
   private isLoaded(): boolean {
-    const pixelElement = document.getElementById('pixel-script');
-    return !!pixelElement;
+    if(isPlatformBrowser(this.platformId)){
+      const pixelElement = document.getElementById('pixel-script');
+      return !!pixelElement;
+    }else{
+      return false;
+    }
   }
 
 }

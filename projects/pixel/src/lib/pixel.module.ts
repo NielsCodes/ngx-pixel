@@ -1,6 +1,7 @@
 import { PixelConfiguration } from './pixel.models';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import {Inject, ModuleWithProviders, NgModule, PLATFORM_ID} from '@angular/core';
 import { PixelService } from './pixel.service';
+import {isPlatformBrowser} from '@angular/common';
 
 @NgModule({
   imports: [],
@@ -9,11 +10,13 @@ export class PixelModule {
 
   private static config: PixelConfiguration | null = null;
 
-  constructor( private pixel: PixelService ) {
+  // tslint:disable-next-line:ban-types
+  constructor( private pixel: PixelService, @Inject(PLATFORM_ID) platformId: Object,
+  ) {
     if (!PixelModule.config) {
       throw Error('ngx-pixel not configured correctly. Pass the `pixelId` property to the `forRoot()` function');
     }
-    if (PixelModule.config.enabled) {
+    if (PixelModule.config.enabled && isPlatformBrowser(platformId)) {
       this.pixel.initialize();
     }
   }
