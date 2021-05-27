@@ -1,19 +1,31 @@
 import { PixelEventName, PixelConfiguration, PixelEventProperties } from './pixel.models';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional, PLATFORM_ID, Renderer2, RendererFactory2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { filter } from 'rxjs/operators';
 
-declare var fbq: any;
+declare const fbq: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class PixelService {
 
+  private doc: Document;
+  private renderer: Renderer2
+
   constructor(
     @Inject('config') private config: PixelConfiguration,
-    @Optional() private router: Router
+    @Inject(DOCUMENT) private injectedDocument: any,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() private router: Router,
+    private rendererFactory: RendererFactory2
   ) {
+
+    // DOCUMENT cannot be injected directly as Document type, see https://github.com/angular/angular/issues/20351
+    // It is therefore injected as any and then cast to Document
+    this.doc = injectedDocument as Document;
+    this.renderer = rendererFactory.createRenderer(null, null);
 
     if (router) {
       // Log page views after router navigation ends
@@ -58,8 +70,12 @@ export class PixelService {
   track(
     eventName: PixelEventName,
     properties?: PixelEventProperties
-    ): void {
-    if(!this.isLoaded()) {
+  ): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    if (!this.isLoaded()) {
       console.warn('Tried to track an event without initializing a Pixel instance. Call `initialize()` first.');
       return;
     }
@@ -80,7 +96,11 @@ export class PixelService {
    * @param properties Optional properties of the event
    */
   trackCustom(eventName: string, properties?: object): void {
-    if(!this.isLoaded()) {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    if (!this.isLoaded()) {
       console.warn('Tried to track an event without initializing a Pixel instance. Call `initialize()` first.');
       return;
     }
@@ -97,6 +117,9 @@ export class PixelService {
    * @param pixelId The Facebook Pixel ID to use
    */
   private addPixelScript(pixelId: string): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
 
     const pixelCode = `
     var pixelCode = function(f,b,e,v,n,t,s)
@@ -110,16 +133,20 @@ export class PixelService {
     fbq('init', '${pixelId}');
     fbq('track', 'PageView');`;
 
-    const scriptElement = document.createElement('script');
-    scriptElement.setAttribute('id', 'pixel-script');
-    scriptElement.type = 'text/javascript';
-    scriptElement.innerHTML = pixelCode;
-    document.getElementsByTagName('head')[0].appendChild(scriptElement);
+
+    const scriptElement = this.renderer.createElement('script');
+    this.renderer.setAttribute(scriptElement, 'id', 'pixel-script');
+    this.renderer.setAttribute(scriptElement, 'type', 'text/javascript');
+    this.renderer.setProperty(scriptElement, 'innerHTML', pixelCode);
+    this.renderer.appendChild(this.doc.head, scriptElement);
   }
 
   /** Remove Facebook Pixel tracking script from the application */
   private removePixelScript(): void {
-    const pixelElement = document.getElementById('pixel-script');
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    const pixelElement = this.doc.getElementById('pixel-script');
     if (pixelElement) {
       pixelElement.remove();
     }
@@ -127,8 +154,11 @@ export class PixelService {
 
   /** Checks if the script element is present */
   private isLoaded(): boolean {
-    const pixelElement = document.getElementById('pixel-script');
-    return !!pixelElement;
+    if (isPlatformBrowser(this.platformId)) {
+      const pixelElement = this.doc.getElementById('pixel-script');
+      return !!pixelElement;
+    }
+    return false;
   }
 
 }
