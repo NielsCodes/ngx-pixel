@@ -121,7 +121,8 @@ export class HomeComponent {
 In situations where the Pixel ID needs to be changed dynamically, this can be done using `initialize()` with the new Pixel ID as an optional argument. 
 **Notes:** 
 - A Pixel ID still needs to be provided when importing ***ngx-pixel*** in the module.
-- The previous instance should be removed with `remove()` before initializing a new Pixel ID.  
+- The previous instance should be removed with `remove()` before initializing a new Pixel ID. 
+- This approach should **not** be used in combination with serverside rendering (SSR). As the module is initialized on each request, the Pixel script will default to the ID provided in the module.  
 
 ## Disabling ***ngx-pixel***
 Disabling works very similar to *enabling* from within a component and looks like this:
@@ -147,7 +148,7 @@ export class HomeComponent {
 ---
 
 # What's next?
-- [ ] Adding Angular Universal SSR support.
+- [X] Adding Angular Universal SSR support.
 - [ ] Adding tests.
 - [ ] Removing all Facebook scripts on removal, not just the initial script.
 
