@@ -124,6 +124,7 @@ In situations where the Pixel ID needs to be changed dynamically, this can be do
 - The previous instance should be removed with `remove()` before initializing a new Pixel ID. 
 - This approach should **not** be used in combination with serverside rendering (SSR). As the module is initialized on each request, the Pixel script will default to the ID provided in the module.  
 
+
 ## Disabling ***ngx-pixel***
 Disabling works very similar to *enabling* from within a component and looks like this:
 ```TypeScript
