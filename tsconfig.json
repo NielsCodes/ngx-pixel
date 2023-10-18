@@ -15,18 +15,13 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "pixel": [
-        "dist/pixel/pixel",
-        "dist/pixel"
-      ]
+      "pixel": ["dist/pixel/pixel", "dist/pixel"]
     }
   },
   "angularCompilerOptions": {
+    "enableIvy": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
