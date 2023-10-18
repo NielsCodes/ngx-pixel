@@ -34,7 +34,7 @@ export class PixelModule {
 
     return {
       ngModule: PixelModule,
-      providers: [PixelService, { provide: 'config', useValue: config }]
+      providers: [PixelService, { provide: 'config', useValue: config }],
     };
   }
 

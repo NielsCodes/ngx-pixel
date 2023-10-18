@@ -65,7 +65,7 @@ export class PixelService {
       return;
     }
     this.config.enabled = true;
-    this.addPixelScript(pixelId);
+    this.addPixelScript(pixelId, this.config.appId);
   }
 
   /** Remove the Pixel tracking script */
@@ -129,11 +129,16 @@ export class PixelService {
   /**
    * Adds the Facebook Pixel tracking script to the application
    * @param pixelId The Facebook Pixel ID to use
+   * @param appId The Facebook Pixel APP ID to use
    */
-  private addPixelScript(pixelId: string): void {
+  private addPixelScript(pixelId: string, appId?: string): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
+
+    const scriptMobileBridge = appId
+      ? `fbq('set', 'mobileBridge', '${pixelId}', '${appId}')`
+      : '';
 
     const pixelCode = `
     var pixelCode = function(f,b,e,v,n,t,s)
@@ -145,6 +150,7 @@ export class PixelService {
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '${pixelId}');
+      ${scriptMobileBridge}
     fbq('track', 'PageView');`;
 
     const scriptElement = this.renderer.createElement('script');

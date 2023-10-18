@@ -3,6 +3,8 @@ export interface PixelConfiguration {
   enabled?: boolean;
   /** Your Facebook Pixel ID */
   pixelId: string;
+  /** Your Facebook APP ID, only is required to mobileBridge  */
+  appId?: string;
 }
 
 export interface PixelEventProperties {
