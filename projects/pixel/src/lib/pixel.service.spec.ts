@@ -4,11 +4,6 @@ import { PixelService } from './pixel.service';
 import { PLATFORM_ID } from '@angular/core';
 import { PixelEventName, PixelEventProperties } from './pixel.models';
 
-declare const fbq: (
-  type: 'track' | 'trackCustom',
-  eventName: PixelEventName | string,
-  properties?: PixelEventProperties
-) => void;
 
 describe('PixelService', () => {
   let service: PixelService;
