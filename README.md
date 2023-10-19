@@ -158,7 +158,7 @@ imports: [
 
 # What's next?
 - [X] Adding Angular Universal SSR support.
-- [ ] Adding tests.
+- [X] Adding tests.
 - [ ] Removing all Facebook scripts on removal, not just the initial script.
 
 ---
