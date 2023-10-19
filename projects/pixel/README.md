@@ -140,6 +140,16 @@ export class HomeComponent {
 }
 ```
 
+## Enabling mobileBridge to Hybrid Mobile App Events ***ngx-pixel*** 
+It sends the events to app container following this link: https://developers.facebook.com/docs/app-events/hybrid-app-events/.
+When adding ***ngx-pixel*** to `app.module.ts`, add the parameter `appId: 'YOUR_PIXEL_APP_ID'`.
+```TypeScript
+imports: [
+  BrowserModule,
+  PixelModule.forRoot({ enabled: true, pixelId: 'YOUR_PIXEL_ID', appId: 'YOUR_PIXEL_APP_ID'})
+],
+```
+
 ---
 
 # Important notes
@@ -149,7 +159,7 @@ export class HomeComponent {
 
 # What's next?
 - [X] Adding Angular Universal SSR support.
-- [ ] Adding tests.
+- [X] Adding tests.
 - [ ] Removing all Facebook scripts on removal, not just the initial script.
 
 ---
