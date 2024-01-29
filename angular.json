@@ -45,6 +45,5 @@
     }},
   "cli": {
     "analytics": "236561c0-2dd3-46bd-9c4c-605442e3815b"
-  },
-  "defaultProject": "pixel"
+  }
 }
